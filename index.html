@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Numero Romano para Decimal</title>
+    <link rel="stylesheet" href="lib/bootstrap.min.css">
+<style>
+ body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+            background-color: #ccc;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        #romanInput,
+        #convertBtn,
+        #decimalOutput,
+        #errorDisplay {
+            margin: 0 auto;
+        }
+
+</style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Conversor de Romano para Decimal</h1>
+    </div>
+    <div class="form-group" style="text-align: center">
+        <label for="romanInput" >Insira o número Romano</label>
+        <input type="text" class="form-control" id="romanInput" placeholder="I, X, G, C, D, M">
+    </div>    
+    <button type="button" class="btn btn-primary mt-2" id="convertBtn">Converter</button>
+    <div class="form-group mt-3">
+        <label for="decimalOutput">Resultado Decimal:</label>
+        <input type="text" class="form-control" id="decimalOutput" readonly>
+    </div>
+    <div class="alert alert-danger mt-3 d-none" id="errorDisplay" role="alert">
+        Simbolo Inválido. Pr favor, tente novamente.
+    </div>
+    <div style="text-align: center;">&copy
+        Copyright by Rodrigo Sumioshi
+    </div>
+
+    <!-- JS - operações -->
+    <script src="lib/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('convertBtn').addEventListener('click', function() {
+        const romanInput = document.getElementById('romanInput').value.toUpperCase();
+    const romanValues = {
+      'I': 1, 'V': 5, 'X': 10, 'G': 50, 'C': 100, 'D': 500, 'M': 1000
+    };
+
+    let decimalValue = 0;
+    let prevValue = 0;
+      for (let i = romanInput.length - 1; i >= 0; i--) {
+      const currentValue = romanValues[romanInput[i]];
+      if (currentValue >= prevValue) {
+        decimalValue += currentValue;
+      } else {
+        decimalValue -= currentValue;
+      }
+  
+      prevValue = currentValue;
+    }
+      const decimalOutput = document.getElementById('decimalOutput');
+    const errorDisplay = document.getElementById('errorDisplay');
+    if (decimalValue) {
+      decimalOutput.value = decimalValue;
+      errorDisplay.classList.add('d-none');
+    } else {
+      decimalOutput.value = '';
+      errorDisplay.classList.remove('d-none');
+    }
+  });
+  
+    </script>
+</body>
+</html>
